@@ -1,0 +1,57 @@
+fn main() {
+    let result = run_brainfuck("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
+    print(result)
+}
+
+fn run_brainfuck(code: string) string {
+    let tape = int_array(0, 30000)
+    let tape_pointer = 0
+    let code_pointer = 0
+    let output = ""
+
+    while code_pointer < len(code) {
+        let command = code[code_pointer]
+        
+        if command == "+" {
+            tape[tape_pointer] = tape[tape_pointer] + 1
+        } else if command == "-" {
+            tape[tape_pointer] = tape[tape_pointer] - 1
+        } else if command == ">" {
+            tape_pointer = tape_pointer + 1
+        } else if command == "<" {
+            tape_pointer = tape_pointer - 1
+        } else if command == "[" {
+            if tape[tape_pointer] == 0 {
+                var depth = 1
+                while depth > 0 {
+                    code_pointer = code_pointer + 1
+                    let c = code[code_pointer]
+                    if c == "[" {
+                        depth = depth + 1
+                    } else if c == "]" {
+                        depth = depth - 1
+                    }
+                }
+            }
+        } else if command == "]" {
+            if tape[tape_pointer] != 0 {
+                let depth = 1
+                while depth > 0 {
+                    code_pointer = code_pointer - 1
+                    let c = code[code_pointer]
+                    if c == "]" {
+                        depth = depth + 1
+                    } else if c == "[" {
+                        depth = depth - 1
+                    }
+                }
+            }
+        } else if command == "." {
+            output = output + unicode_to_string(tape[tape_pointer])
+        }
+        
+        code_pointer = code_pointer + 1
+    }
+    
+    return output
+}

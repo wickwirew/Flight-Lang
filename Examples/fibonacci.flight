@@ -1,0 +1,17 @@
+fn main() {
+    fibonacci(20)
+}
+
+fn fibonacci(n: int) {
+    let val_1 = 0
+    let val_2 = 1
+
+    let count = 0
+    while count < n {
+        let tmp = val_1
+        val_1 = val_2
+        val_2 = tmp + val_2
+        count = count + 1
+        print(val_2)
+    }
+}
