@@ -102,6 +102,8 @@ class Parser {
             return try parseIfStmt()
         case .while:
             return try parseWhile()
+        case .for:
+            return try parseFor()
         case .eof:
             return nil
         default:
@@ -316,5 +318,23 @@ class Parser {
         let condition = try parseExpr()
         let body = try parseBody()
         return WhileStmt(condition: condition, body: body)
+    }
+    
+    private func parseFor() throws -> ForStmt {
+        let start = current.location
+        try consume(.for)
+        let variable = try parseIdent()
+        try consume(.in)
+        let lower = try parseExpr()
+        try consume(.to)
+        let upper = try parseExpr()
+        let body = try parseBody()
+        return ForStmt(
+            variable: variable,
+            lowerBound: lower,
+            upperBound: upper,
+            location: start.spanning(upper.location),
+            body: body
+        )
     }
 }

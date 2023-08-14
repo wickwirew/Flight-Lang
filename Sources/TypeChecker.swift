@@ -115,6 +115,29 @@ extension TypeChecker: StmtVisitor {
         
         try `while`.body.accept(visitor: self)
     }
+    
+    func visit(for: ForStmt) throws {
+        scope = scope.pushing()
+        defer { scope = scope.popping() }
+        
+        scope.insert(ident: `for`.variable, value: .int)
+        
+        let lower = try `for`.lowerBound.accept(visitor: self)
+        let upper = try `for`.upperBound.accept(visitor: self)
+        
+        if lower != .int {
+            errors.add(.incorrectType(expected: .int, got: lower), at: `for`.lowerBound.location)
+        }
+        
+        if upper != .int {
+            errors.add(.incorrectType(expected: .int, got: lower), at: `for`.upperBound.location)
+        }
+        
+        scope = scope.pushing()
+        scope.insert(ident: `for`.variable, value: .int)
+        try `for`.body.accept(visitor: self)
+        scope = scope.popping()
+    }
 }
 
 extension TypeChecker: ExprVisitor {

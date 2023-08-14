@@ -103,6 +103,21 @@ extension Interpreter: StmtVisitor {
             value = newValue
         }
     }
+    
+    func visit(for: ForStmt) throws {
+        let lower = try `for`.lowerBound.accept(visitor: self)
+        guard case let .int(l) = lower else { typeCheckerMissed() }
+        
+        let upper = try `for`.upperBound.accept(visitor: self)
+        guard case let .int(u) = upper else { typeCheckerMissed() }
+        
+        for i in l..<u {
+            scope = scope.pushing()
+            scope.insert(ident: `for`.variable, value: .int(i))
+            try `for`.body.accept(visitor: self)
+            scope = scope.popping()
+        }
+    }
 }
 
 extension Interpreter: ExprVisitor {

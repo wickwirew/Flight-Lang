@@ -83,4 +83,8 @@ struct FlowAnalysis: StmtVisitor {
     func visit(while: WhileStmt) throws -> Result {
         return try `while`.body.accept(visitor: self)
     }
+    
+    func visit(for: ForStmt) throws -> Result {
+        return try `for`.body.accept(visitor: self)
+    }
 }

@@ -98,6 +98,18 @@ struct WhileStmt: Stmt {
     }
 }
 
+struct ForStmt: Stmt {
+    let variable: Ident
+    let lowerBound: Expr
+    let upperBound: Expr
+    let location: SourceLocation
+    let body: BodyStmt
+    
+    func accept<V>(visitor: V) throws -> V.StmtOutput where V : StmtVisitor {
+        return try visitor.visit(for: self)
+    }
+}
+
 struct IntLit: Expr {
     let int: Int
     let location: SourceLocation
@@ -208,6 +220,7 @@ protocol StmtVisitor {
     func visit(body: BodyStmt) throws -> StmtOutput
     func visit(if: IfStmt) throws -> StmtOutput
     func visit(while: WhileStmt) throws -> StmtOutput
+    func visit(for: ForStmt) throws -> StmtOutput
 }
 
 protocol ExprVisitor {

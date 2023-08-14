@@ -51,6 +51,9 @@ struct Token {
         case `if`
         case `else`
         case `while`
+        case `for`
+        case `in`
+        case to
         case openParen
         case closeParen
         case comma
@@ -83,6 +86,9 @@ struct Token {
             case "true": self = .bool(true)
             case "false": self = .bool(false)
             case "while": self = .while
+            case "for": self = .for
+            case "in": self = .in
+            case "to": self = .to
             default: self = .ident(word)
             }
         }
@@ -111,6 +117,12 @@ struct Token {
                 return "else"
             case .while:
                 return "while"
+            case .for:
+                return "for"
+            case .in:
+                return "in"
+            case .to:
+                return "to"
             case .openParen:
                 return "("
             case .closeParen:
