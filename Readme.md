@@ -1,18 +1,16 @@
 # Flight Lang
-A toy language written while on a flight and vacation.
+A toy language written while on a flight. Admittedly I worked on it when I had some downtime on the vacation, so it really wasn't just during the flight, but I liked the name so it stays.
 
 I've written a handful of programming languages over the years and usually they are overly ambitious consisting of many complex language features like Hindly-Milner type inference, null safety, polymorphic types and so on. None of them have ever been made public due to just never really finishing them since the feature set was too large. While on vacation I was looking to burn some time, so I challenged myself to write a very simple toy language during the flight and open source it at the end of the vacation. This is the result.
 
-Admittedly I worked on it when I had some downtime on the vacation, so it really wasn't just during the flight, but I liked the name so it stays.
-
-Note: This was written about as fast as I could type, there are 0 comments and many best practices are blatantly ignored. This should not serve as an example of how to implement things properly but still can act as a basic primer on how a trivial language can be implemented.
+Note: This was written about as fast as I could type, there are 0 comments, 0 tests and many best practices are blatantly ignored. This should not serve as an example of how to implement things properly but still can act as a basic primer on how a trivial language can be implemented.
 
 ## Design
 The language is statically typed and consists of just a few different types: `int`, `float`, `string`, `bool`, `void`, `fn` and `array`. I wanted to keep the type system as simple as possible with 0 type inference. As far as compilation, for simplicity, I decided to make it an interpreted language with a very trivial tree walking interpreter.
 
 ## Installation
 * Build `swift build -c release`
-* Add the executable at `./build/release/flight` to your `$PATH`
+* Add the executable at `./.build/release/flight` to your path
 
 ## Usage
 ```
